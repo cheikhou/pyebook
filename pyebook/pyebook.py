@@ -36,7 +36,7 @@ class Book:
         # get root file and extract metadata
         root = container_soup.find('rootfile')
         self.root_file_url = root.get('full-path')
-        self.root_file = bs(self.book_file.read(self.root_file_url), 'xml')
+        self.root_file = bs(self.book_file.read(self.root_file_url), features='xml')
         for s in ['title', 'language', 'creator', 'date', 'identifier']:
             m = self.root_file.find(s)
             self.metadata[s] = m.text
@@ -53,7 +53,7 @@ class Book:
         # get the toc file from the root file
         rel_path = self.root_file_url.replace(os.path.basename(self.root_file_url), '')
         self.toc_file_url = rel_path + self.root_file.find(id="ncx")['href']
-        self.toc_file_soup = bs(self.book_file.read(self.toc_file_url), 'xml')
+        self.toc_file_soup = bs(self.book_file.read(self.toc_file_url), Features='xml')
 
         # get the book content from the toc file
 
